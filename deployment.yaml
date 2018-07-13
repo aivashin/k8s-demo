@@ -1,0 +1,33 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: demo-frontend
+spec:
+  selector:
+    app: demo-frontend
+  ports:
+  - protocol: TCP
+    port: 8888
+    nodePort: 30001
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-frontend
+spec:
+  selector:
+      matchLabels:
+        app: demo-frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: demo-frontend
+    spec:
+      containers:
+        - name: demo-frontend
+          image: halfback/demo-frontend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8888
