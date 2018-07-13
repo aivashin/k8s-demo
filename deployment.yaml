@@ -1,10 +1,10 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: demo-frontend
+  name: k8s-demo
 spec:
   selector:
-    app: demo-frontend
+    app: k8s-demo
   ports:
   - protocol: TCP
     port: 8888
@@ -14,20 +14,20 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: demo-frontend
+  name: k8s-demo
 spec:
   selector:
       matchLabels:
-        app: demo-frontend
+        app: k8s-demo
   replicas: 1
   template:
     metadata:
       labels:
-        app: demo-frontend
+        app: k8s-demo
     spec:
       containers:
-        - name: demo-frontend
-          image: halfback/demo-frontend:latest
+        - name: k8s-demo
+          image: halfback/k8s-demo:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8888
