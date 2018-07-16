@@ -8,7 +8,7 @@ public class DemoController {
 
     @RequestMapping("/")
     public String index() {
-        return "Image 1";
+        return "Image 2";
     }
 
 }
