@@ -1,6 +1,7 @@
 node {
         def mvnHome
         def pom
+	def commit_id
         
     	stage('checkout'){
         
@@ -9,7 +10,7 @@ node {
 		pom = readMavenPom file: 'pom.xml'
 
         	sh "git rev-parse HEAD > commit-id"
-	        def commit_id = readFile('commit-id').trim()
+	        commit_id = readFile('commit-id').trim()
         	println commit_id
 	}
 
@@ -26,8 +27,7 @@ node {
     	}
     	
     	stage('deploy to k8s'){
-    	    sh 'kubectl delete -f deployment.yaml || true' 
-    	    sh 'kubectl create -f deployment.yaml --validate=false'
+		sh "kubectl patch deployment k8s-demo -p '{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"k8s-demo\",\"env\":[{\"name\":\"commit_id\",\"value\":\"${commit_id}\"}]}]}}}}'"
     	}
 }
 
