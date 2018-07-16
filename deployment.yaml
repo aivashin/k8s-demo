@@ -19,7 +19,7 @@ spec:
   selector:
       matchLabels:
         app: k8s-demo
-  replicas: 1
+  replicas: 2
   template:
     metadata:
       labels:
@@ -31,3 +31,5 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 8888
+      nodeSelector:
+        env: production
