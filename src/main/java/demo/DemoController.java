@@ -8,7 +8,7 @@ public class DemoController {
 
     @RequestMapping("/")
     public String index() {
-        return "k8s-demo app deployed successfully";
+        return "k8s-demo app is up and running!";
     }
 
 }
