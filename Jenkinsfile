@@ -27,7 +27,7 @@ node {
     	}
     	
     	stage('deploy to k8s'){
-		sh "kubectl patch deployment k8s-demo -p '{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"k8s-demo\",\"env\":[{\"name\":\"commit_id\",\"value\":\"${commit_id}\"}]}]}}}}'"
+		sh "kubectl patch deployment k8s-demo -n production -p '{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"k8s-demo\",\"env\":[{\"name\":\"commit_id\",\"value\":\"${commit_id}\"}]}]}}}}'"
     	}
 }
 
