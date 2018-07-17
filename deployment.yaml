@@ -41,5 +41,3 @@ spec:
           env:
           - name: commit_id 
             value: latest 
-      nodeSelector:
-        env: production
