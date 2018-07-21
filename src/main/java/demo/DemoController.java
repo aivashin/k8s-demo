@@ -21,7 +21,7 @@ public class DemoController {
 	String str = "k8s-demo app is up and running!<br><br>";
 	try {
             DatabaseMetaData dbMeta = connect().getMetaData();
-            str = str + "k8s-demo app is up and running!<br><br>Connected to the PostgreSQL server successfully. DB info:<br>URL: " + dbMeta.getURL() + "<br>User name:" + dbMeta.getUserName() + "<br>Product name:" + dbMeta.getDatabaseProductName() + "<br>Version: " + dbMeta.getDatabaseProductVersion() + "<br>Driver: " + dbMeta.getDriverName();
+            str = str + "Connected to the PostgreSQL server successfully:<br><b>URL:</b> " + dbMeta.getURL() + "<br><b>User name:</b> " + dbMeta.getUserName() + "<br><b>Product name:</b> " + dbMeta.getDatabaseProductName() + "<br><b>Version:</b> " + dbMeta.getDatabaseProductVersion() + "<br><b>Driver:</b> " + dbMeta.getDriverName();
 	} catch (SQLException e) {
             str = str + "No SQL connection: " + e.getMessage();
         }
