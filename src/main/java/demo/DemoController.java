@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class DemoController {
 
     private final String url = "jdbc:postgresql://k8s-demo-db.c7b9juowbyq0.eu-west-1.rds.amazonaws.com:5432/demo";
-    private final String user = "mapy";
+    private final String user = "mpay";
     private final String password = "MPaymentDB";
 
     @RequestMapping("/")
