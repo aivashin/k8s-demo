@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.DatabaseMetaData;
 
 @RestController
 public class DemoController {
@@ -17,8 +18,14 @@ public class DemoController {
 
     @RequestMapping("/")
     public String index() {
-        Connection conn = connect();
-        return "k8s-demo app is up and running!!!!!!!!!!!!!!!!!!!";
+	String str = "k8s-demo app is up and running!<br><br>";
+	try {
+            DatabaseMetaData dbMeta = connect().getMetaData();
+            str = str + "k8s-demo app is up and running!<br><br>Connected to the PostgreSQL server successfully. DB info:<br>URL: " + dbMeta.getURL() + "<br>User name:" + dbMeta.getUserName() + "<br>Product name:" + dbMeta.getDatabaseProductName() + "<br>Version: " + dbMeta.getDatabaseProductVersion() + "<br>Driver: " + dbMeta.getDriverName();
+	} catch (SQLException e) {
+            str = str + "No SQL connection: " + e.getMessage();
+        }
+	return str;
     }
 
     public Connection connect() {
