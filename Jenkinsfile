@@ -5,7 +5,8 @@ node {
         
     	stage('checkout'){
         
-	        git url: 'https://github.com/aivashin/k8s-demo.git'
+//	        git url: 'https://github.com/aivashin/k8s-demo.git'
+		checkout scm
         	mvnHome = tool 'M3'
 		pom = readMavenPom file: 'pom.xml'
 
