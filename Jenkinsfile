@@ -3,6 +3,7 @@ node {
         def pom
 	def commit_id
 	def ecrRepo = "862349788439.dkr.ecr.eu-west-1.amazonaws.com"
+	def nameSpace
         
     	stage('checkout'){
         
@@ -13,7 +14,11 @@ node {
         	sh "git rev-parse HEAD > commit-id"
 	        commit_id = readFile('commit-id').trim()
         	println commit_id
-println env.BRANCH_NAME
+		if (env.BRANCH_NAME == 'master') {
+			nameSpace = "staging"
+		} else {
+			nameSpace = "development"
+		}
 	}
 
         stage('build'){
@@ -30,7 +35,7 @@ println env.BRANCH_NAME
     	}
     	
     	stage('deploy to k8s'){
-		    sh "kubectl set image deployment/k8s-demo -n staging k8s-demo=${ecrRepo}/${pom.artifactId}:${commit_id}"
+		    sh "kubectl set image deployment/k8s-demo -n ${nameSpace} k8s-demo=${ecrRepo}/${pom.artifactId}:${commit_id}"
     	}
 }
 
