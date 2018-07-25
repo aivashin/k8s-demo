@@ -2,6 +2,7 @@ node {
         def mvnHome
         def pom
 	def commit_id
+	def ecrRepo = "862349788439.dkr.ecr.eu-west-1.amazonaws.com"
         
     	stage('checkout'){
         
@@ -19,15 +20,16 @@ node {
         }
         
         stage('create & upload docker image'){
-		sh ("docker build -t halfback/${pom.artifactId}:latest .")
-		withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]){
-		sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-		sh ("docker push halfback/${pom.artifactId}:latest")
+		withCredentials([usernamePassword(credentialsId: 'AWS-ECR', passwordVariable: 'ecrPassword', usernameVariable: 'ecrUser')]){
+		    sh ("docker build -t ${pom.artifactId}:${commit_id} .")
+		    sh "docker login -u ${env.ecrUser} -p ${env.ecrPassword} https://${ecrRepo}"
+		    sh "docker tag ${pom.artifactId}:${commit_id} ${ecrRepo}/${pom.artifactId}:${commit_id}"
+		    sh ("docker push ${ecrRepo}/${pom.artifactId}:${commit_id}")
 		}
     	}
     	
     	stage('deploy to k8s'){
-		sh "kubectl patch deployment k8s-demo -n staging -p '{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"k8s-demo\",\"env\":[{\"name\":\"commit_id\",\"value\":\"${commit_id}\"}]}]}}}}'"
+		    sh "kubectl set image deployment/k8s-demo -n staging k8s-demo=${ecrRepo}/${pom.artifactId}:${commit_id}"
     	}
 }
 
