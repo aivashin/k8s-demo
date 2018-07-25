@@ -18,7 +18,7 @@ public class DemoController {
 
     @RequestMapping("/")
     public String index() {
-	String str = "<h1>k8s-demo app is up and running!</h1><br><br>";
+	String str = "<h1>k8s-demo app is up and running!!!</h1><br><br>";
 	try {
             DatabaseMetaData dbMeta = connect().getMetaData();
             str = str + "Connected to the PostgreSQL server successfully:<br><b>URL:</b> " + dbMeta.getURL() + "<br><b>User name:</b> " + dbMeta.getUserName() + "<br><b>Product name:</b> " + dbMeta.getDatabaseProductName() + "<br><b>Version:</b> " + dbMeta.getDatabaseProductVersion() + "<br><b>Driver:</b> " + dbMeta.getDriverName();
