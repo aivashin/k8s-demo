@@ -13,6 +13,7 @@ node {
         	sh "git rev-parse HEAD > commit-id"
 	        commit_id = readFile('commit-id').trim()
         	println commit_id
+println env.BRANCH_NAME
 	}
 
         stage('build'){
