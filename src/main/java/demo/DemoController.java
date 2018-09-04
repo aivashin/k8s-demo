@@ -13,8 +13,8 @@ import java.sql.DatabaseMetaData;
 public class DemoController {
 
     private final String url = "jdbc:postgresql://k8s-demo-db.c7b9juowbyq0.eu-west-1.rds.amazonaws.com:5432/demo";
-    private final String user = "mpay";
-    private final String password = "MPaymentsDB";
+    private final String user = "?????????";
+    private final String password = "???????????";
 
     @RequestMapping("/")
     public String index() {
